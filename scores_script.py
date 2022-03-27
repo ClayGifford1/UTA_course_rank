@@ -72,5 +72,5 @@ def clean_data(filepath):
 
     print(df.head())
 
-#scrape_survey_data(True)
-#clean_data("Fall 2021.csv")
+scrape_survey_data(True)
+clean_data("Fall 2021.csv")
