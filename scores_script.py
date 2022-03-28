@@ -5,44 +5,31 @@ import re
 
 import tabula as tb
 import pandas as pd
+import numpy as np
 
-def get_prof_names(df, verbose):
+def apply_split_data(index, final_split, lnames, fnames, course_numbers, course_names):
 
-    name_pattern = re.compile("[,. ]+")
-    #name_pattern = re.compile("[a-zA-z]*[,. ]+")
-    course_pattern = re.compile("[A-Z]{2,6}([-][A-Z0-9]+)+", re.IGNORECASE) # Need to find out why last ones aren't matching
+    course_pattern = re.compile("([\S]+[0-9]+)+", re.IGNORECASE) 
+    alt_leftover_pattern = re.compile("[;][\s]*")
+    # Need to find out why some aren't matching 
+    # "[A-Z]{2,6}[-][A-Z0-9]{2,6}([-][A-Z0-9]+)*"
+    # Something to do with hyphens 
 
-    size = df.shape[0]
+    lnames[index] = final_split[0]
+    fnames[index] = final_split[1]
+    leftover = final_split[2].split(":")
 
-    lnames = [None] * size
-    fnames = [None] * size
-    course_names = [None] * size
-    course_numbers = [None] * size
+    if len(leftover) < 2:
+        #leftover = final_split[2].split(";")
+        leftover = alt_leftover_pattern.split(final_split[2], maxsplit=1)
 
-    for index, value in df["Instructor and Course"].iteritems():
-
-        value = value.strip()
-        fixed = value.split("\r")
-        value = ''.join(fixed)
-
-        split_by_name = name_pattern.split(value, maxsplit=2)
-
-        """
-        if verbose:
-            print(index)
-            print(split_by_name)
-            print()
-        """
-
-        lnames[index] = split_by_name[0]
-        fnames[index] = split_by_name[1]
-        leftover = split_by_name[2].split(":")
+    if len(leftover) == 2:
 
         leftover[0] = leftover[0].strip()
         leftover[1] = leftover[1].strip()
 
-        if verbose:
-            print(leftover)
+        #if verbose:
+        #   print(leftover)
 
         match1 = course_pattern.search(leftover[0])
         match2 = course_pattern.search(leftover[1])
@@ -51,9 +38,61 @@ def get_prof_names(df, verbose):
             course_numbers[index] = match1.group(0)
             course_names[index] = leftover[1]
         
-        if match2 != None:
+        elif match2 != None:
             course_numbers[index] = match2.group(0)
             course_names[index] = leftover[0]
+
+        else:
+            pass
+
+def sep_name_course_data(value):
+
+    name_pattern = re.compile("[,.; ]+")
+    extraneous_lname = re.compile("[A-Z][a-z]+")
+
+    value = value.strip()
+    fixed = value.split("\r")
+    value = ''.join(fixed)
+
+    init_split = name_pattern.split(value, maxsplit=2)
+
+    final_split = []
+
+    if len(init_split) == 3:
+
+        middle_name_evidence = extraneous_lname.match(init_split[2])
+
+        if middle_name_evidence != None:
+            final_split.append(" ".join(init_split[0:2]))
+            lname = middle_name_evidence.group(0)
+            lname_and_course = init_split[2].split(maxsplit=1)
+            final_split.append(lname)
+            #final_split.append(lname_and_course[0])
+            final_split.append(lname_and_course[1])
+        else:
+            final_split = init_split
+
+    return final_split
+
+def split_prof_course(df, verbose):
+
+    size = df.shape[0]
+
+    lnames = [None] * size
+    fnames = [None] * size
+    course_numbers = [None] * size
+    course_names = [None] * size
+
+    for index, value in df["Instructor and Course"].iteritems():
+
+        final_split = sep_name_course_data(value)
+
+        #if verbose:
+         #   print(final_split)
+
+        if len(final_split) == 3:
+
+            apply_split_data(index, final_split, lnames, fnames, course_numbers, course_names)
 
 
     df["Lname"] = lnames
@@ -69,15 +108,22 @@ def clean_data(filepath, verbose):
 
     df = pd.read_csv(filepath, header=0)
 
+    df.dropna(axis=1, how="all", inplace=True)
+
     if len(df.columns) < len(columns_list):
 
-        if verbose:
-            print("\nERROR: file {} not clean - incompatible size requirement\n".format(filepath))
-        return
+        alt_columns_list = ["Instructor and Course", "Enrolled", "Responses", "Clarity", "Prepardeness", "Communication", "Encouragement", "Availability"]
 
-    df.dropna(axis=1, how="all", inplace=True)
-    df.columns = columns_list
-    df.drop("Response Rate", axis=1, inplace=True)
+        if verbose:
+            print("\nERROR: file {} not clean - incompatible size requirement - attempting to use alt columns\n".format(filepath))
+        #return
+
+        df.columns = alt_columns_list
+
+    else:
+
+        df.columns = columns_list
+        df.drop("Response Rate", axis=1, inplace=True)
 
     type_corrections_list = ["Enrolled", "Responses","Prepardeness", 
     "Communication", "Clarity", "Encouragement", "Availability"]
@@ -89,10 +135,10 @@ def clean_data(filepath, verbose):
 
     df.reset_index(drop=True, inplace=True)
 
-    if verbose:
-        print("data cleaned - dataframe head below")
+    split_prof_course(df, verbose)
 
-    get_prof_names(df, verbose)
+    if verbose:
+        print("data cleaned - dataframe head below\n")
 
     print(df.head())
     print("\n")
@@ -141,7 +187,7 @@ def scrape_survey_data(verbose=False):
             #df = tb.read_pdf(pdf_path, pages=1, multiple_tables=False, lattice=True)
 
             csv_path = "{}.csv".format(link.text)        
-            tb.convert_into(pdf_path, csv_path, output_format='csv', pages=1)
+            tb.convert_into(pdf_path, csv_path, output_format='csv', pages="all")
 
             if verbose:
                 print("file converted to csv format")
