@@ -7,6 +7,15 @@ import tabula as tb
 import pandas as pd
 import numpy as np
 
+
+def export_json(df):
+    pass
+
+def cleanup(df):
+    print(df.isna().sum())
+    print("\nrows - {}".format(df.shape[0]))
+    #print(df[df['Course_Number'].isnull()].index.tolist())
+
 def apply_split_data(index, final_split, lnames, fnames, course_numbers, course_names):
 
     course_pattern = re.compile("([\S]+[0-9]+)+", re.IGNORECASE) 
@@ -22,6 +31,10 @@ def apply_split_data(index, final_split, lnames, fnames, course_numbers, course_
     if len(leftover) < 2:
         #leftover = final_split[2].split(";")
         leftover = alt_leftover_pattern.split(final_split[2], maxsplit=1)
+
+    if len(leftover) > 2:
+        leftover[1] = " ".join(leftover[1:])
+        leftover = leftover[:2]
 
     if len(leftover) == 2:
 
@@ -111,15 +124,12 @@ def clean_data(filepath, verbose):
     df.dropna(axis=1, how="all", inplace=True)
 
     if len(df.columns) < len(columns_list):
-
         alt_columns_list = ["Instructor and Course", "Enrolled", "Responses", "Clarity", "Prepardeness", "Communication", "Encouragement", "Availability"]
 
         if verbose:
             print("\nERROR: file {} not clean - incompatible size requirement - attempting to use alt columns\n".format(filepath))
-        #return
 
         df.columns = alt_columns_list
-
     else:
 
         df.columns = columns_list
@@ -136,6 +146,8 @@ def clean_data(filepath, verbose):
     df.reset_index(drop=True, inplace=True)
 
     split_prof_course(df, verbose)
+
+    cleanup(df)
 
     if verbose:
         print("data cleaned - dataframe head below\n")
@@ -197,4 +209,5 @@ def scrape_survey_data(verbose=False):
 
             clean_data(csv_path, verbose)
 
-scrape_survey_data(True)
+if __name__ == "__main__":
+    scrape_survey_data(True)
