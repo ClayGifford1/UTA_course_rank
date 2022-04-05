@@ -3,13 +3,21 @@ from bs4 import BeautifulSoup as bs
 
 import re
 
-import tabula as tb
+import tabula.io as tb
 import pandas as pd
 import numpy as np
 
+import json
 
-def export_json(df):
-    pass
+
+def export_json(df, filepath):
+    filename = filepath.split(".")
+    filename = filename[0] + ".json"
+    result = df.to_json()
+    parsed = json.loads(result)
+    with open(filename, "w") as outfile: 
+        json.dump(parsed, outfile) 
+
 
 def cleanup(df):
     print(df.isna().sum())
@@ -124,10 +132,12 @@ def clean_data(filepath, verbose):
     df.dropna(axis=1, how="all", inplace=True)
 
     if len(df.columns) < len(columns_list):
-        alt_columns_list = ["Instructor and Course", "Enrolled", "Responses", "Clarity", "Prepardeness", "Communication", "Encouragement", "Availability"]
+        alt_columns_list = ["Instructor and Course", "Enrolled", "Responses", "Clarity", 
+        "Prepardeness", "Communication", "Encouragement", "Availability"]
 
         if verbose:
-            print("\nERROR: file {} not clean - incompatible size requirement - attempting to use alt columns\n".format(filepath))
+            print("\nERROR: file {} not clean - incompatible size requirement - " + 
+            "attempting to use alt columns\n".format(filepath))
 
         df.columns = alt_columns_list
     else:
@@ -154,6 +164,11 @@ def clean_data(filepath, verbose):
 
     print(df.head())
     print("\n")
+
+    export_json(df, filepath)
+
+    if verbose:
+        print("\ncleaned data was exported to json file. Process complete.\n")
 
 def scrape_survey_data(verbose=False):
 
