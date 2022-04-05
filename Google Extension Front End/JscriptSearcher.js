@@ -7,7 +7,7 @@ setTimeout(() => { 	var table1 = document.querySelector('[title="Class Selection
 		classNum = document.getElementById("SSR_CRSE_INFO_V_SSS_SUBJ_CATLG");
 		for( let i = 0; i < tr.length; i++ )
 		{
-			td = tr[i].getElementsByTagName("td")[7];
+			td = tr[i].getElementsByTagName("td")[6];
 			if(td){
 				txtValue = td.textContent;
 				profNames.push((td.textContent));
