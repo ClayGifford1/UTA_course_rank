@@ -14,8 +14,14 @@ setTimeout(() => { 	var table1 = document.querySelector('[title="Class Selection
 				findLocation(td);
 				newDiv = document.createElement("div");
 				newContent = document.createTextNode("NEW TEXT HERE!");
+				//newDiv.style.backgroundColor = "#FF0000";
+				newDiv.style.fontWeight = "bold";
+				newDiv.style.border = "solid";
+				newDiv.style.borderColor = "red";
+				newDiv.style.zIndex = 1000;
 				newDiv.appendChild(newContent);
 				td.append(newDiv);
+				newDiv.addEventListener('click', Clicked());
 				}
 
 			console.log(txtValue)
@@ -24,16 +30,9 @@ setTimeout(() => { 	var table1 = document.querySelector('[title="Class Selection
 	}; }, 2000);
 
 
-function findLocation( teachName ) 
+function Clicked( ) 
 {
-    var _x = 0;
-    var _y = 0;
-    while( teachName && !isNaN( teachName.offsetLeft ) && !isNaN( teachName.offsetTop ) ) {
-          _x += teachName.offsetLeft - teachName.scrollLeft;
-          _y += teachName.offsetTop - teachName.scrollTop;
-          teachName = teachName.offsetParent;
-    }
-	console.log( _x);
-	console.log( _y);
-    return { top: _y, left: _x };
+	//stopPropagation();
+	console.log("clicked!");
+	
 }
