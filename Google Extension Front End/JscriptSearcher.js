@@ -11,9 +11,12 @@ setTimeout(() => { 	var table1 = document.querySelector('[title="Class Selection
 			if(td){
 				txtValue = td.textContent;
 				profNames.push((td.textContent));
-				findLocation(td);
+				//findLocation(td);
 				newDiv = document.createElement("div");
-				newContent = document.createTextNode("NEW TEXT HERE!");
+				var score = Math.random() + 4;
+				score = score.toFixed(2);
+				score.toString();
+				newContent = document.createTextNode(score);
 				//newDiv.style.backgroundColor = "#FF0000";
 				newDiv.style.fontWeight = "bold";
 				newDiv.style.border = "solid";
