@@ -10,14 +10,15 @@ import numpy as np
 import json
 
 
-def export_json(df, filepath):
+def export_json(df, filepath, verbose):
     filename = filepath.split(".")
     filename = filename[0] + ".json"
-    result = df.to_json()
+
+    result = df.to_json(orient="records")
     parsed = json.loads(result)
+
     with open(filename, "w") as outfile: 
         json.dump(parsed, outfile) 
-
 
 def cleanup(df):
     print(df.isna().sum())
@@ -121,6 +122,7 @@ def split_prof_course(df, verbose):
     df["Course_Number"] = course_numbers
     df["Course_Name"] = course_names
 
+    df.drop("Instructor and Course", axis=1, inplace=True)
     
 def clean_data(filepath, verbose):
 
@@ -157,15 +159,13 @@ def clean_data(filepath, verbose):
 
     split_prof_course(df, verbose)
 
-    cleanup(df)
-
     if verbose:
         print("data cleaned - dataframe head below\n")
+        print(df.head())
+        print("\n")
+        cleanup(df)
 
-    print(df.head())
-    print("\n")
-
-    export_json(df, filepath)
+    export_json(df, filepath, verbose)
 
     if verbose:
         print("\ncleaned data was exported to json file. Process complete.\n")
