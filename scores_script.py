@@ -9,16 +9,17 @@ import numpy as np
 
 import json
 
-
 def export_json(df, filepath, verbose):
     filename = filepath.split(".")
     filename = filename[0] + ".json"
 
-    result = df.to_json(orient="records")
+    result = df.to_json(orient="table")
     parsed = json.loads(result)
 
     with open(filename, "w") as outfile: 
         json.dump(parsed, outfile) 
+
+    return filename
 
 def cleanup(df):
     print(df.isna().sum())
@@ -165,12 +166,17 @@ def clean_data(filepath, verbose):
         print("\n")
         cleanup(df)
 
-    export_json(df, filepath, verbose)
+    return df 
 
-    if verbose:
-        print("\ncleaned data was exported to json file. Process complete.\n")
+    # json_file = export_json(df, filepath, verbose)
+
+    #if verbose:
+        #print("\ncleaned data was exported to json file. Process complete.\n")
 
 def scrape_survey_data(verbose=False):
+
+    links = 0
+    df = pd.DataFrame()
 
     page = requests.get("https://www.uta.edu/ier/student-feedback-survey/students.php")
 
@@ -222,7 +228,14 @@ def scrape_survey_data(verbose=False):
             if verbose:
                 print("cleaning data...")
 
-            clean_data(csv_path, verbose)
+            if links > 0:
+                df = pd.concat([df, clean_data(csv_path, verbose)])
+            else:
+                df = clean_data(csv_path, verbose)
+
+            links += 1
+
+    filename = export_json(df, "combined.whatevs", verbose)
 
 if __name__ == "__main__":
     scrape_survey_data(True)
