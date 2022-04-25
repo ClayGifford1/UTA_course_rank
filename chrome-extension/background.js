@@ -12,5 +12,21 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const db = app.database().ref();
 
-console.log("In background.js");
-console.log(db);
+db.child("data").child(0).get().then((snapshot) => {
+  if (snapshot.exists()) {
+    console.log(snapshot.val());
+  } else {
+    console.log("No data available");
+  }
+});
+
+/*
+db.get("/data/Lname/Csallner").then((snapshot) => {
+  if (snapshot.exists()) {
+    console.log(snapshot.val());
+  }
+  else {
+    console.log("Failure");
+  }
+});
+*/
