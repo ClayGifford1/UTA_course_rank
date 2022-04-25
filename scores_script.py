@@ -13,7 +13,7 @@ def export_json(df, filepath, verbose):
     filename = filepath.split(".")
     filename = filename[0] + ".json"
 
-    result = df.to_json(orient="table")
+    result = df.to_json(orient="records")
     parsed = json.loads(result)
 
     with open(filename, "w") as outfile: 
