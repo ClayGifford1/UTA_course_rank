@@ -1,3 +1,4 @@
+from unicodedata import name
 import requests
 from bs4 import BeautifulSoup as bs
 
@@ -26,7 +27,7 @@ def cleanup(df):
     print("\nrows - {}".format(df.shape[0]))
     #print(df[df['Course_Number'].isnull()].index.tolist())
 
-def apply_split_data(index, final_split, lnames, fnames, course_numbers, course_names):
+def apply_split_data(index, final_split, lnames, fnames, course_numbers, course_names, full_name, full_names):
 
     course_pattern = re.compile("([\S]+[0-9]+)+", re.IGNORECASE) 
     alt_leftover_pattern = re.compile("[;][\s]*")
@@ -36,6 +37,7 @@ def apply_split_data(index, final_split, lnames, fnames, course_numbers, course_
 
     lnames[index] = final_split[0]
     fnames[index] = final_split[1]
+    full_names[index] = full_name
     leftover = final_split[2].split(":")
 
     if len(leftover) < 2:
@@ -81,6 +83,8 @@ def sep_name_course_data(value):
 
     final_split = []
 
+    full_name = []
+
     if len(init_split) == 3:
 
         middle_name_evidence = extraneous_lname.match(init_split[2])
@@ -94,13 +98,18 @@ def sep_name_course_data(value):
             final_split.append(lname_and_course[1])
         else:
             final_split = init_split
+        
+        full_name.append(final_split[1])
+        full_name.append(final_split[0])
+        full_name = " ".join(full_name)
 
-    return final_split
+    return final_split, full_name
 
 def split_prof_course(df, verbose):
 
     size = df.shape[0]
 
+    full_names = [None] * size
     lnames = [None] * size
     fnames = [None] * size
     course_numbers = [None] * size
@@ -108,16 +117,16 @@ def split_prof_course(df, verbose):
 
     for index, value in df["Instructor and Course"].iteritems():
 
-        final_split = sep_name_course_data(value)
+        final_split, full_name = sep_name_course_data(value)
 
         #if verbose:
          #   print(final_split)
 
         if len(final_split) == 3:
 
-            apply_split_data(index, final_split, lnames, fnames, course_numbers, course_names)
+            apply_split_data(index, final_split, lnames, fnames, course_numbers, course_names, full_name, full_names)
 
-
+    df["Full_Name"] = full_names
     df["Lname"] = lnames
     df["Fname"] = fnames
     df["Course_Number"] = course_numbers
@@ -173,15 +182,36 @@ def clean_data(filepath, verbose):
     #if verbose:
         #print("\ncleaned data was exported to json file. Process complete.\n")
 
+def add_fname(row):
+
+    name = row["Full_Name"].split(maxsplit=1)
+    return name[0]
+
+def add_lname(row):
+
+    name = row["Full_Name"].split(maxsplit=1)
+    return name[1]
+
 def fix_duplicates(df):
 
     df.drop(columns=["Enrolled", "Responses", "Course_Name", "Course_Number"], inplace=True)
 
-    prof_groups = df.loc[df.duplicated(subset=["Lname", "Fname"]), :].groupby(["Lname", "Fname"]).mean().reset_index()
+    prof_groups = df.loc[df.duplicated(subset=["Full_Name"]), :].groupby(["Full_Name"]).mean().reset_index()
 
-    df = prof_groups
+    df = pd.concat([df, prof_groups])
 
-    df.set_index(["Fname", "Lname"], inplace=True)
+    df.drop_duplicates(subset=["Full_Name"], keep="last", inplace=True)
+
+    df.dropna(subset=["Full_Name"], inplace=True)
+
+    df["Fname"] = df.apply(lambda row: add_fname(row), axis=1)
+    df["Lname"] = df.apply(lambda row: add_lname(row), axis=1)
+
+    df.dropna(inplace=True)
+
+    df.set_index(["Full_Name"], inplace=True)
+
+    print(df.shape)
 
     return df
 
@@ -249,6 +279,8 @@ def scrape_survey_data(verbose=False):
             links += 1
 
     df = fix_duplicates(df)
+
+    print(df.shape)
 
     filename = export_json(df, "combined.whatevs", verbose)
 
