@@ -10,4 +10,7 @@ const firebaseConfig = {
 };
 
 const app = firebase.initializeApp(firebaseConfig);
+
+console.log(firebase)
+
 const database = firebase.database.getDatabase(app);
