@@ -32,7 +32,6 @@ setTimeout(() => { 	var table1 = document.querySelector('[title="Class Selection
 		}
 	}; }, 2000);
 
-
 function Clicked( ) 
 {
 	//stopPropagation();

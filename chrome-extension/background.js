@@ -9,8 +9,8 @@ const firebaseConfig = {
   measurementId: "G-9D8S1QQCY5"
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-console.log(firebase)
-
-const database = firebase.database.getDatabase(app);
+console.log("In background.js");
+console.log(firebase);

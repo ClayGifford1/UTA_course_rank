@@ -6,7 +6,10 @@
 
   <link rel="stylesheet" href="main.css">
 
-  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-compat.js"></script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"
+    import { getDatabase } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"
+  </script>
   <script src="background.js"></script>
 </head>
 <body>
