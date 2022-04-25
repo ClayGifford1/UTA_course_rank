@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "UTA Course Rank",
   "version": "1",
-  "content_security_policy": "script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'",
+  "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
 
   "icons": {
 	  "16": "Picture1.png",
