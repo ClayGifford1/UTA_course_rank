@@ -1,7 +1,3 @@
-import { initializeApp } from '@firebase/app';
-import { getAnalytics } from '@firebase/analytics';
-import { getDatabase } from '@firebase/database'; 
-
 const firebaseConfig = {
   apiKey: "AIzaSyDbGq-_w7iBzjmCncRVHeUovDsZNuaID3Q",
   authDomain: "course-rank.firebaseapp.com",
@@ -13,6 +9,5 @@ const firebaseConfig = {
   measurementId: "G-9D8S1QQCY5"
 };
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const database = getDatabase(app);
+const app = firebase.initializeApp(firebaseConfig);
+const database = firebase.database.getDatabase(app);
