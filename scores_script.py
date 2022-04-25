@@ -13,7 +13,7 @@ def export_json(df, filepath, verbose):
     filename = filepath.split(".")
     filename = filename[0] + ".json"
 
-    result = df.to_json(orient="records")
+    result = df.to_json(orient="index")
     parsed = json.loads(result)
 
     with open(filename, "w") as outfile: 
@@ -173,6 +173,19 @@ def clean_data(filepath, verbose):
     #if verbose:
         #print("\ncleaned data was exported to json file. Process complete.\n")
 
+def fix_duplicates(df):
+
+    df.drop(columns=["Enrolled", "Responses", "Course_Name", "Course_Number"], inplace=True)
+
+    prof_groups = df.loc[df.duplicated(subset=["Lname", "Fname"]), :].groupby(["Lname", "Fname"]).mean().reset_index()
+
+    df = prof_groups
+
+    df.set_index(["Fname", "Lname"], inplace=True)
+
+    return df
+
+
 def scrape_survey_data(verbose=False):
 
     links = 0
@@ -234,6 +247,8 @@ def scrape_survey_data(verbose=False):
                 df = clean_data(csv_path, verbose)
 
             links += 1
+
+    df = fix_duplicates(df)
 
     filename = export_json(df, "combined.whatevs", verbose)
 
