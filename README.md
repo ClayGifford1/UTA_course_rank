@@ -9,7 +9,7 @@
    2) Active MyMav account
 # Installation
    Make sure you downloaded the file from the github and save it where you could easily find it.
-   In Google Chrome 
+   In Google Chrome:
    1) Navigate to chrome://extensions/
    2) In the top right of the page enable "Developer mode"
    3) click "Load Unpacked Extension"
