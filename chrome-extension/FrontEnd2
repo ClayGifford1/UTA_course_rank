@@ -73,40 +73,45 @@ setTimeout(
 						() => {
 					for (let i = 0; i < tr.length; i++)
 					{
-						td = tr[i].getElementsByTagName("td")[6];
 						if (td)
 						{
 							//Create new Div && Fill it with Scores + " Topic "
 							for (iterator = 0; iterator < 6; iterator++)
 							{
 									var score = profScores[iterator+total];
-									if( iterator == 0 )
+									if( typeof(profScores[0]) != "undefined" )
+										scoreString = score.toString();
+									if( iterator == 0 && profScores[0]) != "undefined"  )
 									{
+											scoreString += " Availability "
+									}
+									else if ( iterator == 1 && profScores[0]) != "undefined"  )
+									{
+										scoreString += " Clarity "
 
 									}
-									else if ( iterator == 1 )
+									else if ( iterator == 2 && profScores[0]) != "undefined"  )
 									{
+										scoreString += " Communication "
 
 									}
-									else if ( iterator == 2 )
+									else if ( iterator == 3 && profScores[0]) != "undefined"  )
 									{
+										scoreString += " Encouragement " 
 
 									}
-									else if ( iterator == 3 )
+									else if ( iterator == 4 && profScores[0]) != "undefined" )
 									{
+										scoreString += " Ovr_Score "
 
 									}
-									else if ( iterator == 4 )
+									else if ( iterator == 5 && profScores[0]) != "undefined"  )
 									{
-
-									}
-									else if ( iterator == 5 )
-									{
+										scoreString += " Preparedness "
 
 									}
 									//Creates New Div
-									if( typeof(profScores[0]) != "undefined" )
-										scoreString = score.toString();
+
 									console.log(score);
 									newContent = document.createTextNode(scoreString);
 									newDiv = document.createElement("div");
@@ -119,7 +124,7 @@ setTimeout(
 									//newDiv.addEventListener('click', Clicked());
 
 						}
-						total += 5;
+						total += 6;
 				}
 
 		}
