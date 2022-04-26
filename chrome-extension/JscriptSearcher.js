@@ -54,6 +54,7 @@ setTimeout(
 					for (let i = 0; i < tr.length; i++) {
 						td = tr[i].getElementsByTagName("td")[6];
 						if (td) {
+							//Makes sure no middle name is included in txtValue
 							txtValue = td.textContent;
 							SplitNames = txtValue.split(" ");
 							if(SplitNames.length() == 3 )
