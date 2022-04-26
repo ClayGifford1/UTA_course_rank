@@ -12,7 +12,7 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const db = app.database().ref();
 
-db.child("data").child(0).get().then((snapshot) => {
+db.child("Christoph Csallner").get().then((snapshot) => {
   if (snapshot.exists()) {
     console.log(snapshot.val());
   } else {

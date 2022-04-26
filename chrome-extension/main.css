@@ -1,0 +1,27 @@
+#Active {
+    position: absolute;
+    top: 5%;
+    left: 40%;
+    height: 50px;
+    width: 300px;
+    font-size: 15px;
+    text-align: center;
+    z-index: 1000;
+    border-width: 5px;
+    border-color: white;
+}
+
+#On {
+    float: left;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: green;
+}
+
+#Okay {
+    float: right;
+    border-width: 3px;
+    border-color: black;
+}
+
