@@ -25,3 +25,15 @@
     border-color: black;
 }
 
+#Verbose {
+    font-weight: bold;
+    border: solid;
+    border-color: black;
+    position: absolute;
+    right: 5%;
+    width: 400px;
+    bottom: 5%;
+    text-align: center;
+    z-index: 1500;
+}
+

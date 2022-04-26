@@ -11,6 +11,14 @@ greenDot.setAttribute('id', 'On');
 notify.appendChild(greenDot);
 document.body.appendChild(notify);
 
+document.createElement("button");
+// Creates Verbose Content
+let VerboseContent = document.createTextNode("UTA course rank is an extension which displays professor's scores as you sign up for classes ");
+let VerboseDiv = document.createElement("div");
+VerboseDiv.setAttribute("id", "Verbose");
+VerboseDiv.append(VerboseContent);
+document.body.append(VerboseDiv);
+
 setTimeout(
 	() => {
 		// Instantiating Variables
@@ -22,24 +30,6 @@ setTimeout(
 		var profScores = new Array();
 		var txtValue = "";
 		var iterator = 0;
-		//boolean  assign false
-		document.createElement("button");
-		// Creates Verbose Content
-		let VerboseContent = document.createTextNode("UTA course rank is an extension which displays professor's scores as you sign up for classes ");
-		let VerboseDiv = document.createElement("div");
-		VerboseDiv.style.fontWeight = "bold";
-		VerboseDiv.style.border = "solid";
-		VerboseDiv.style.borderColor = "black";
-		VerboseDiv.style.position = "fixed";
-		VerboseDiv.style.right = "100px";
-		VerboseDiv.style.width = "400px";
-		VerboseDiv.style.top = "150px";
-		//VerboseDiv.style.textAlign = "right";
-		VerboseDiv.style.zIndex = 1500;
-		document.body.append(VerboseDiv);
-		VerboseDiv.append(VerboseContent);
-		//Btn.appendChild(newContent);
-		//td.append(MyBtn);
 
 			if (table1 != null)
 			{
