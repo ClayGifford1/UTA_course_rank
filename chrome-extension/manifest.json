@@ -25,7 +25,7 @@
   "content_scripts": [{
 	"matches": ["https://mymav.utshare.utsystem.edu/*"],
 	"css": ["main.css"],
-  "js": ["FrontEnd2.js"]
+  "js": ["Frontend.js"]
   }],
 
   "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'"
