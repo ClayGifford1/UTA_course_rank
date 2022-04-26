@@ -20,13 +20,21 @@ db.child("Christoph Csallner").get().then((snapshot) => {
   }
 });
 
-/*
-db.get("/data/Lname/Csallner").then((snapshot) => {
-  if (snapshot.exists()) {
-    console.log(snapshot.val());
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+    if (request.command === "fetch")
+      {
+        db.child(request.data).get().then((snapshot) => {
+          if (snapshot.exists()) {
+            sendResponse(snapshot.val());
+          }
+          else {
+            sendResponse(0);
+          }
+        });
+      }
   }
-  else {
-    console.log("Failure");
-  }
-});
-*/
+);
