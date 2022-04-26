@@ -8,11 +8,12 @@
    1) Google Chrome
    2) Active MyMav account
 # Installation
-   In Google Chrome 
+   Make sure you downloaded the file from the github and save it where you could easily find it.
+   In Google Chrome:
    1) Navigate to chrome://extensions/
    2) In the top right of the page enable "Developer mode"
    3) click "Load Unpacked Extension"
-   4) Select the "Google Chrome Front End" folder in this repo.
+   4) Select the "chrome-extension" folder in this repo.
    In later versions you will simply need to navigate to the extensions page and click install.
 # Executing The Program
    1) Navigate to chrome://extensions/
