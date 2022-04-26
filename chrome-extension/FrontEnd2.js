@@ -79,39 +79,33 @@ setTimeout(
 							for (iterator = 0; iterator < 6; iterator++)
 							{
 									var score = profScores[iterator+total];
-									if( typeof(profScores[0]) != "undefined" )
-										scoreString = score.toString();
-									if( iterator == 0 && profScores[iterator+total] != "undefined"  )
+									if( iterator == 0 )
 									{
-											scoreString += " Availability "
-									}
-									else if ( iterator == 1 && profScores[iterator+total]  != "undefined"  )
-									{
-										scoreString += " Clarity "
 
 									}
-									else if ( iterator == 2 && profScores[iterator+total]  != "undefined"  )
+									else if ( iterator == 1 )
 									{
-										scoreString += " Communication "
 
 									}
-									else if ( iterator == 3 && profScores[iterator+total]  != "undefined"  )
+									else if ( iterator == 2 )
 									{
-										scoreString += " Encouragement " 
 
 									}
-									else if ( iterator == 4 && profScores[iterator+total]  != "undefined" )
+									else if ( iterator == 3 )
 									{
-										scoreString += " Ovr_Score "
 
 									}
-									else if ( iterator == 5 && profScores[iterator+total]  != "undefined"  )
+									else if ( iterator == 4 )
 									{
-										scoreString += " Preparedness "
+
+									}
+									else if ( iterator == 5 )
+									{
 
 									}
 									//Creates New Div
-
+									if( typeof(profScores[0]) != "undefined" )
+										scoreString = score.toString();
 									console.log(score);
 									newContent = document.createTextNode(scoreString);
 									newDiv = document.createElement("div");
