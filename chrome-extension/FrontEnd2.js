@@ -80,9 +80,9 @@ setTimeout( () =>
 					for (iterator = 0; iterator < 6; iterator++)
 					{
 							var score = profScores[iterator+total];
-							score = score.toFixed(2);
 							if( typeof(profScores[iterator+total]) != "undefined" )
 							{
+								score = score.toFixed(2);
 								scoreString = score.toString();
 								if( iterator == 0 && typeof(profScores[iterator+total]) != "undefined" )
 								{
