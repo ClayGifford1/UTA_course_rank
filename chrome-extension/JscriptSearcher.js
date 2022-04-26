@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /*
 var alertShown = false;
 
@@ -14,6 +15,8 @@ No user data is ever collected`);
 };
 */
 
+=======
+>>>>>>> Stashed changes
 var notify = document.createElement('div');
 notify.setAttribute('id', 'Active');
 
