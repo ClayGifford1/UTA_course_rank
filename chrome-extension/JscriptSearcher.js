@@ -11,6 +11,24 @@ greenDot.setAttribute('id', 'On');
 notify.appendChild(greenDot);
 document.body.appendChild(notify);
 
+function createDiv(score, profScores) {
+	//Creates New Div
+	if (typeof(profScores[0]) != "undefined") {
+		scoreString = score.toString();
+	}
+
+	console.log(score);
+	newContent = document.createTextNode(scoreString);
+	newDiv = document.createElement("div");
+	newDiv.style.fontWeight = "bold";
+	newDiv.style.border = "solid";
+	newDiv.style.borderColor = "red";
+	newDiv.style.zIndex = 1000;
+	newDiv.appendChild(newContent);
+	td.append(newDiv);
+	//newDiv.addEventListener('click', Clicked());
+}
+
 setTimeout(
 	() => {
 		// Instantiating Variables
@@ -22,12 +40,6 @@ setTimeout(
 		var profScores = new Array();
 		var txtValue = "";
 		var iterator = 0;
-		//boolean  assign false
-		document.createElement("button");
-		// Creates Verbose Content
-
-		//Btn.appendChild(newContent);
-		//td.append(MyBtn);
 
 			if (table1 != null)
 			{
@@ -98,19 +110,8 @@ setTimeout(
 									{
 
 									}
-									//Creates New Div
-									if( typeof(profScores[0]) != "undefined" )
-										scoreString = score.toString();
-									console.log(score);
-									newContent = document.createTextNode(scoreString);
-									newDiv = document.createElement("div");
-									newDiv.style.fontWeight = "bold";
-									newDiv.style.border = "solid";
-									newDiv.style.borderColor = "red";
-									newDiv.style.zIndex = 1000;
-									newDiv.appendChild(newContent);
-									td.append(newDiv);
-									//newDiv.addEventListener('click', Clicked());
+
+									createDiv(score, profScores);
 
 						}
 						while(profScores.length > 0)

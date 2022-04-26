@@ -27,16 +27,18 @@ chrome.runtime.onMessage.addListener(
     console.log(sender.tab ?
                 "from a content script:" + sender.tab.url :
                 "from the extension");
-    if (request.command === "fetch")
-      {
-        db.child(request.data).once().then((snapshot) => {
-          if (snapshot.exists()) {
-            sendResponse(snapshot.val());
-          }
-          else {
-            sendResponse(0);
-          }
-        });
-      }
+    if (request.command === "fetch") {
+      db.child(request.data).get().then((snapshot) => {
+        if (snapshot.exists()) {
+          console.log(snapshot.val());
+          sendResponse(snapshot.val());
+        }
+        else {
+          console.log(0);
+          sendResponse(0);
+        }
+      });
+    }
+    return true;
   }
 );
