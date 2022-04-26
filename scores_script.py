@@ -136,7 +136,7 @@ def split_prof_course(df, verbose):
 def clean_data(filepath, verbose):
 
     columns_list = ["Instructor and Course", "Enrolled", "Responses", "Response Rate", 
-    "Prepardeness", "Communication", "Clarity", "Encouragement", "Availability"]
+    "Preparedness", "Communication", "Clarity", "Encouragement", "Availability"]
 
     df = pd.read_csv(filepath, header=0)
 
@@ -144,7 +144,7 @@ def clean_data(filepath, verbose):
 
     if len(df.columns) < len(columns_list):
         alt_columns_list = ["Instructor and Course", "Enrolled", "Responses", "Clarity", 
-        "Prepardeness", "Communication", "Encouragement", "Availability"]
+        "Preparedness", "Communication", "Encouragement", "Availability"]
 
         if verbose:
             print("\nERROR: file {} not clean - incompatible size requirement - " + 
@@ -156,7 +156,7 @@ def clean_data(filepath, verbose):
         df.columns = columns_list
         df.drop("Response Rate", axis=1, inplace=True)
 
-    type_corrections_list = ["Enrolled", "Responses","Prepardeness", 
+    type_corrections_list = ["Enrolled", "Responses","Preparedness", 
     "Communication", "Clarity", "Encouragement", "Availability"]
 
     for col in type_corrections_list:
@@ -217,7 +217,7 @@ def fix_duplicates(df):
 
 def add_ovr_score(row):
 
-    return np.mean([row["Availability"], row["Clarity"], row["Encouragement"], row["Prepardeness"], row["Communication"]])
+    return np.mean([row["Availability"], row["Clarity"], row["Encouragement"], row["Preparedness"], row["Communication"]])
 
 
 def scrape_survey_data(verbose=False):
