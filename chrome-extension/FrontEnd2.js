@@ -60,7 +60,7 @@ setTimeout(
 							chrome.runtime.sendMessage({command: "fetch", data: txtValue },
 							(response) =>
 							{
-							  	profScores.push(response.Availability)
+							  profScores.push(response.Availability)
 								profScores.push(response.Clarity)
 								profScores.push(response.Communication)
 								profScores.push(response.Encouragement)
@@ -73,40 +73,45 @@ setTimeout(
 						() => {
 					for (let i = 0; i < tr.length; i++)
 					{
-						td = tr[i].getElementsByTagName("td")[6];
 						if (td)
 						{
 							//Create new Div && Fill it with Scores + " Topic "
 							for (iterator = 0; iterator < 6; iterator++)
 							{
 									var score = profScores[iterator+total];
-									if( iterator == 0 )
+									if( typeof(profScores[0]) != "undefined" )
+										scoreString = score.toString();
+									if( iterator == 0 && profScores[iterator+total] != "undefined"  )
 									{
+											scoreString += " Availability "
+									}
+									else if ( iterator == 1 && profScores[iterator+total]  != "undefined"  )
+									{
+										scoreString += " Clarity "
 
 									}
-									else if ( iterator == 1 )
+									else if ( iterator == 2 && profScores[iterator+total]  != "undefined"  )
 									{
+										scoreString += " Communication "
 
 									}
-									else if ( iterator == 2 )
+									else if ( iterator == 3 && profScores[iterator+total]  != "undefined"  )
 									{
+										scoreString += " Encouragement " 
 
 									}
-									else if ( iterator == 3 )
+									else if ( iterator == 4 && profScores[iterator+total]  != "undefined" )
 									{
+										scoreString += " Ovr_Score "
 
 									}
-									else if ( iterator == 4 )
+									else if ( iterator == 5 && profScores[iterator+total]  != "undefined"  )
 									{
-
-									}
-									else if ( iterator == 5 )
-									{
+										scoreString += " Preparedness "
 
 									}
 									//Creates New Div
-									if( typeof(profScores[0]) != "undefined" )
-										scoreString = score.toString();
+
 									console.log(score);
 									newContent = document.createTextNode(scoreString);
 									newDiv = document.createElement("div");
