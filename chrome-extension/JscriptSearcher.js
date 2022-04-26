@@ -80,38 +80,9 @@ setTimeout(
 								profScores.push(response.Preparedness);
 								console.log(profScores[0]);
 								console.log("^^^");
-							} );
-							//Create new Div && Fill it with Scores + " Topic "
-							for (iterator = 0; iterator < 5; iterator++)
-							{
-									console.log(profScores[i])
-									var score = profScores[iterator];
-									if( iterator == 0 )
-									{
+							});
 
-									}
-									else if ( iterator == 1 )
-									{
-
-									}
-									else if ( iterator == 2 )
-									{
-
-									}
-									else if ( iterator == 3 )
-									{
-
-									}
-									else if ( iterator == 4 )
-									{
-
-									}
-									else if ( iterator == 5 )
-									{
-
-									}
-
-									createDiv(score, profScores);
+							createDiv(score, profScores);
 
 						}
 						while(profScores.length > 0)
@@ -124,5 +95,4 @@ setTimeout(
 						console.log(classNum.textContent);
 		}
 
-	}
 	}, 2000);

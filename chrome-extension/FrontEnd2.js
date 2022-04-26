@@ -60,7 +60,7 @@ setTimeout(
 							chrome.runtime.sendMessage({command: "fetch", data: txtValue },
 							(response) =>
 							{
-							  profScores.push(response.Availability)
+							  	profScores.push(response.Availability)
 								profScores.push(response.Clarity)
 								profScores.push(response.Communication)
 								profScores.push(response.Encouragement)
@@ -73,6 +73,7 @@ setTimeout(
 						() => {
 					for (let i = 0; i < tr.length; i++)
 					{
+						td = tr[i].getElementsByTagName("td")[6];
 						if (td)
 						{
 							//Create new Div && Fill it with Scores + " Topic "
