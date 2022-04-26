@@ -77,46 +77,47 @@ setTimeout(() =>
 						{
 								if(profScores[iterator+total] != "undefined")
 								{
-								var score = profScores[iterator+total]
-								scoreString = score.toString()
-								if( iterator == 0)
-								{
-									scoreString	 += " Ovr_Score "
+									var score = profScores[iterator+total]
+									score= score.toFixed(2);
+									scoreString = score.toString();
+									if( iterator == 0)
+									{
+										scoreString	 += " Ovr_Score "
 
-								}
-								else if ( iterator == 1)
-								{
-									scoreString	 += " Availability "
+									}
+									else if ( iterator == 1)
+									{
+										scoreString	 += " Availability "
 
-								}
-								else if ( iterator == 2 )
-								{
-									scoreString	 += " Clarity "
+									}
+									else if ( iterator == 2 )
+									{
+										scoreString	 += " Clarity "
 
-								}
-								else if ( iterator == 3 )
-								{
-									scoreString	 += " Communication "
+									}
+									else if ( iterator == 3 )
+									{
+										scoreString	 += " Communication "
 
 
-								}
-								else if ( iterator == 4 )
-								{
-									scoreString	 += " Encouragement "
+									}
+									else if ( iterator == 4 )
+									{
+										scoreString	 += " Encouragement "
 
-								}
-								else if ( iterator == 5 )
-								{
-									scoreString	 += " Preparedness "
-								}
-								//Creates New Div
+									}
+									else if ( iterator == 5 )
+									{
+										scoreString	 += " Preparedness "
+									}
+									//Creates New Div
 
-								console.log(score);
-								newContent = document.createTextNode(scoreString);
-								newDiv = document.createElement("div");
-								newDiv.setAttribute('id', 'Display');
-								newDiv.appendChild(newContent);
-								td.append(newDiv)
+									console.log(score);
+									newContent = document.createTextNode(scoreString);
+									newDiv = document.createElement("div");
+									newDiv.setAttribute('id', 'Display');
+									newDiv.appendChild(newContent);
+									td.append(newDiv)
 								}
 						}
 					}
