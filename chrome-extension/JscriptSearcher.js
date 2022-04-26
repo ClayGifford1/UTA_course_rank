@@ -58,16 +58,16 @@ setTimeout(
 							chrome.runtime.sendMessage({command: "fetch", data: txtValue },
 							(response) =>
 							{
-								console.log(response.Availability)
-								console.log(response.Clarity)
-							  profScores.push(response.Availability)
-								profScores.push(response.Clarity)
-								profScores.push(response.Communication)
-								profScores.push(response.Encouragement)
-								profScores.push(response.Ovr_Score)
-								profScores.push(response.Preparedness)
-								console.log(profScores[0])
-								console.log("^^^")
+								console.log(response.Availability);
+								console.log(response.Clarity);
+							  	profScores.push(response.Availability);
+								profScores.push(response.Clarity);
+								profScores.push(response.Communication);
+								profScores.push(response.Encouragement);
+								profScores.push(response.Ovr_Score);
+								profScores.push(response.Preparedness);
+								console.log(profScores[0]);
+								console.log("^^^");
 							} );
 							//Create new Div && Fill it with Scores + " Topic "
 							for (iterator = 0; iterator < 5; iterator++)
@@ -119,8 +119,8 @@ setTimeout(
 						}
 				}
 
-						console.log(txtValue)
-						console.log(classNum.textContent)
+						console.log(txtValue);
+						console.log(classNum.textContent);
 		}
 
 	}
