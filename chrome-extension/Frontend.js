@@ -60,11 +60,11 @@ setTimeout( () =>
 				chrome.runtime.sendMessage({command: "fetch", data: txtValue },
 				(response) =>
 				{
-					profScores.push(response.Availability)
+					profScores.push(response.Ovr_Score)
 					profScores.push(response.Clarity)
 					profScores.push(response.Communication)
 					profScores.push(response.Encouragement)
-					profScores.push(response.Ovr_Score)
+					profScores.push(response.Availability)
 					profScores.push(response.Preparedness)
 				} );
 			}
@@ -86,7 +86,7 @@ setTimeout( () =>
 								scoreString = score.toString();
 								if( iterator == 0 && typeof(profScores[iterator+total]) != "undefined" )
 								{
-									scoreString	 += " Availability "
+									scoreString	 += " Ovr_Score "
 								}
 								else if ( iterator == 1 && typeof(profScores[iterator+total]) != "undefined"  )
 								{
@@ -103,7 +103,7 @@ setTimeout( () =>
 								}
 								else if ( iterator == 4 && typeof(profScores[iterator+total]) != "undefined" )
 								{
-									scoreString	 += " Ovr_Score "
+									scoreString	 += " Availability "
 
 								}
 								else if ( iterator == 5 && typeof(profScores[iterator+total]) != "undefined" )
