@@ -12,6 +12,7 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const db = app.database().ref();
 
+/*
 db.child("Christoph Csallner").get().then((snapshot) => {
   if (snapshot.exists()) {
     console.log(snapshot.val());
@@ -19,6 +20,7 @@ db.child("Christoph Csallner").get().then((snapshot) => {
     console.log("No data available");
   }
 });
+*/
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -27,7 +29,7 @@ chrome.runtime.onMessage.addListener(
                 "from the extension");
     if (request.command === "fetch")
       {
-        db.child(request.data).get().then((snapshot) => {
+        db.child(request.data).once().then((snapshot) => {
           if (snapshot.exists()) {
             sendResponse(snapshot.val());
           }
