@@ -1,4 +1,5 @@
 
+
 // Creates an active light to show the extension is running.
 var notify = document.createElement('div');
 notify.setAttribute('id', 'Active');
@@ -69,6 +70,8 @@ setTimeout(
 							} );
 						}
 					}
+					setTimeout(
+	() => {
 					for (let i = 0; i < tr.length; i++)
 					{
 						td = tr[i].getElementsByTagName("td")[6];
@@ -122,7 +125,8 @@ setTimeout(
 						}
 						total += 6;
 				}
-		}
+			}
+		}, 2000);
 
 	}
 	}, 2000);
