@@ -11,25 +11,23 @@ greenDot.setAttribute('id', 'On');
 notify.appendChild(greenDot);
 document.body.appendChild(notify);
 
-document.createElement("button");
-// Creates Verbose Content
-let VerboseContent = document.createTextNode("UTA course rank is an extension which displays professor's scores as you sign up for classes ");
-let VerboseDiv = document.createElement("div");
-VerboseDiv.setAttribute("id", "Verbose");
-VerboseDiv.append(VerboseContent);
-document.body.append(VerboseDiv);
-
 setTimeout(
 	() => {
 		// Instantiating Variables
 			//Find Table w/ Teachers + Classes + Subject
 		var table1 = document.querySelector('[title="Class Options"]');
-
+		var scoreString;
 		var profNames = new Array();
 		var SplitNames = new Array();
 		var profScores = new Array();
 		var txtValue = "";
 		var iterator = 0;
+		//boolean  assign false
+		document.createElement("button");
+		// Creates Verbose Content
+
+		//Btn.appendChild(newContent);
+		//td.append(MyBtn);
 
 			if (table1 != null)
 			{
@@ -43,15 +41,16 @@ setTimeout(
 					// Loops for each class session that is offered.
 					for (let i = 0; i < tr.length; i++) {
 						td = tr[i].getElementsByTagName("td")[6];
-						if (td) {
+						if (td)
+						{
 							//Makes sure no middle name is included in txtValue
 							txtValue = td.textContent;
 							SplitNames = txtValue.split(" ");
-							if(SplitNames.length() == 3 )
+							if(SplitNames.length == 3 )
 							{
-								txtValue = SplitNames[1] + " " + SplitNames[3];
+								txtValue = SplitNames[0] + " " + SplitNames[2];
 							}
-
+							txtValue = txtValue.trimLeft().trimRight();
 							profNames.push((txtValue));
 							//findLocation(td);
 
@@ -59,18 +58,22 @@ setTimeout(
 							chrome.runtime.sendMessage({command: "fetch", data: txtValue },
 							(response) =>
 							{
-								profScores.push(response.Availability)
+								console.log(response.Availability)
+								console.log(response.Clarity)
+							  profScores.push(response.Availability)
 								profScores.push(response.Clarity)
 								profScores.push(response.Communication)
 								profScores.push(response.Encouragement)
 								profScores.push(response.Ovr_Score)
 								profScores.push(response.Preparedness)
+								console.log(profScores[0])
+								console.log("^^^")
 							} );
 							//Create new Div && Fill it with Scores + " Topic "
 							for (iterator = 0; iterator < 5; iterator++)
 							{
+									console.log(profScores[i])
 									var score = profScores[iterator];
-									score.toString();
 									if( iterator == 0 )
 									{
 
@@ -96,7 +99,10 @@ setTimeout(
 
 									}
 									//Creates New Div
-									newContent = document.createTextNode(score);
+									if( typeof(profScores[0]) != "undefined" )
+										scoreString = score.toString();
+									console.log(score);
+									newContent = document.createTextNode(scoreString);
 									newDiv = document.createElement("div");
 									newDiv.style.fontWeight = "bold";
 									newDiv.style.border = "solid";
@@ -104,9 +110,8 @@ setTimeout(
 									newDiv.style.zIndex = 1000;
 									newDiv.appendChild(newContent);
 									td.append(newDiv);
-									newDiv.addEventListener('click', Clicked());
-									VerboseContent.nodeValue = "";
-									VerboseDiv.style.display="none";
+									//newDiv.addEventListener('click', Clicked());
+
 						}
 						while(profScores.length > 0)
 						{
@@ -120,4 +125,3 @@ setTimeout(
 
 	}
 	}, 2000);
-
