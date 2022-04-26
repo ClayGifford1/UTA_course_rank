@@ -60,9 +60,9 @@ setTimeout(
 							=> {
 
 							}*/
-							for (let iterator = 0; iterator < 5; iterator++) {
 							chrome.runtime.sendMessage({command: "fetch", data: txtValue },
-							(response) => {
+							(response) =>
+							{
 								profScores.push(response.Availability)
 								profScores.push(response.Clarity)
 								profScores.push(response.Communication)
@@ -70,20 +70,28 @@ setTimeout(
 								profScores.push(response.Ovr_Score)
 								profScores.push(response.Preparedness)
 							} );
-							var score = bob++;
-							score.toString();
-							newContent = document.createTextNode(score);
-							//newDiv.style.backgroundColor = "#FF0000";
-							newDiv = document.createElement("div");
-							newDiv.style.fontWeight = "bold";
-							newDiv.style.border = "solid";
-							newDiv.style.borderColor = "red";
-							newDiv.style.zIndex = 1000;
-							newDiv.appendChild(newContent);
-							td.append(newDiv);
-							newDiv.addEventListener('click', Clicked());
-							VerboseContent.nodeValue = "";
-							VerboseDiv.style.display="none";
+							
+							for (let iterator = 0; iterator < 5; iterator++)
+							{
+
+									var score = bob++;
+									score.toString();
+									newContent = document.createTextNode(score);
+									//newDiv.style.backgroundColor = "#FF0000";
+									newDiv = document.createElement("div");
+									newDiv.style.fontWeight = "bold";
+									newDiv.style.border = "solid";
+									newDiv.style.borderColor = "red";
+									newDiv.style.zIndex = 1000;
+									newDiv.appendChild(newContent);
+									td.append(newDiv);
+									newDiv.addEventListener('click', Clicked());
+									VerboseContent.nodeValue = "";
+									VerboseDiv.style.display="none";
+						}
+						while(profScores.length > 0)
+						{
+    						profScores.pop();
 						}
 				}
 
@@ -94,3 +102,13 @@ setTimeout(
 			}
 	}, 2000);
 
+
+
+
+
+
+function Clicked() {
+	//stopPropagation();
+	console.log("clicked!");
+
+}
