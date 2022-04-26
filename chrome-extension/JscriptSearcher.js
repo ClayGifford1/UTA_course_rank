@@ -1,3 +1,5 @@
+
+// Creates an active light to show the extension is running.
 var notify = document.createElement('div');
 notify.setAttribute('id', 'Active');
 
@@ -11,15 +13,18 @@ document.body.appendChild(notify);
 
 setTimeout(
 	() => {
+		// Instantiating Variables
+			//Find Table w/ Teachers + Classes + Subject
 		var table1 = document.querySelector('[title="Class Options"]');
+
 		var profNames = new Array();
 		var SplitNames = new Array();
 		var profScores = new Array();
 		var txtValue = "";
-		var bob = 0;
+		var iterator = 0;
 		//boolean  assign false
 		document.createElement("button");
-
+		// Creates Verbose Content
 		let VerboseContent = document.createTextNode("UTA course rank is an extension which displays professor's scores as you sign up for classes ");
 		let VerboseDiv = document.createElement("div");
 		VerboseDiv.style.fontWeight = "bold";
@@ -36,13 +41,16 @@ setTimeout(
 		//Btn.appendChild(newContent);
 		//td.append(MyBtn);
 
-			if (table1 != null) {
-				var classOptions = document.querySelector('[title="Class Options"]').rows.length;
-				console.log(classOptions);
-				classOptions = classOptions - 1;
-					tr = table1.getElementsByTagName("tr");
-					classNum = document.getElementById("SSR_CRSE_INFO_V_SSS_SUBJ_CATLG");
+			if (table1 != null)
+			{
 
+				//Find the rows of the table.
+				tr = table1.getElementsByTagName("tr");
+
+				//Find what subject/class it is, EX: CSE 3311
+				classNum = document.getElementById("SSR_CRSE_INFO_V_SSS_SUBJ_CATLG");
+
+					// Loops for each class session that is offered.
 					for (let i = 0; i < tr.length; i++) {
 						td = tr[i].getElementsByTagName("td")[6];
 						if (td) {
@@ -55,11 +63,8 @@ setTimeout(
 
 							profNames.push((txtValue));
 							//findLocation(td);
-							// Find score
-							/*chrome.runtime.sendMessage({command: "fetch", data: {teachName: domain} }, (response)
-							=> {
 
-							}*/
+							// Connects to database
 							chrome.runtime.sendMessage({command: "fetch", data: txtValue },
 							(response) =>
 							{
@@ -70,14 +75,37 @@ setTimeout(
 								profScores.push(response.Ovr_Score)
 								profScores.push(response.Preparedness)
 							} );
-							
-							for (let iterator = 0; iterator < 5; iterator++)
+							//Create new Div && Fill it with Scores + " Topic "
+							for (iterator = 0; iterator < 5; iterator++)
 							{
-
-									var score = bob++;
+									var score = profScores[iterator];
 									score.toString();
+									if( iterator == 0 )
+									{
+
+									}
+									else if ( iterator == 1 )
+									{
+
+									}
+									else if ( iterator == 2 )
+									{
+
+									}
+									else if ( iterator == 3 )
+									{
+
+									}
+									else if ( iterator == 4 )
+									{
+
+									}
+									else if ( iterator == 5 )
+									{
+
+									}
+									//Creates New Div
 									newContent = document.createTextNode(score);
-									//newDiv.style.backgroundColor = "#FF0000";
 									newDiv = document.createElement("div");
 									newDiv.style.fontWeight = "bold";
 									newDiv.style.border = "solid";
@@ -99,16 +127,6 @@ setTimeout(
 						console.log(classNum.textContent)
 		}
 
-			}
+	}
 	}, 2000);
 
-
-
-
-
-
-function Clicked() {
-	//stopPropagation();
-	console.log("clicked!");
-
-}
