@@ -205,6 +205,7 @@ def fix_duplicates(df):
 
     df["Fname"] = df.apply(lambda row: add_fname(row), axis=1)
     df["Lname"] = df.apply(lambda row: add_lname(row), axis=1)
+    df["Ovr_Score"] = df.apply(lambda row: add_ovr_score(row), axis=1)
 
     df.dropna(inplace=True)
 
@@ -213,6 +214,10 @@ def fix_duplicates(df):
     print(df.shape)
 
     return df
+
+def add_ovr_score(row):
+
+    return np.mean([row["Availability"], row["Clarity"], row["Encouragement"], row["Prepardeness"], row["Communication"]])
 
 
 def scrape_survey_data(verbose=False):
