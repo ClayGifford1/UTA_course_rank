@@ -1,22 +1,3 @@
-<<<<<<< Updated upstream
-/*
-var alertShown = false;
-
-if (!alertShown) {
-
-	alert(`UTA Course Rank is now in use
-
-The extension will display professor scores while you browse classes
-
-No user data is ever collected`);
-
-	alertShown = true;
-
-};
-*/
-
-=======
->>>>>>> Stashed changes
 var notify = document.createElement('div');
 notify.setAttribute('id', 'Active');
 
