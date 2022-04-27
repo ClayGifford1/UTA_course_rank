@@ -1,3 +1,4 @@
+// config for access to database
 const firebaseConfig = {
   apiKey: "AIzaSyDbGq-_w7iBzjmCncRVHeUovDsZNuaID3Q",
   authDomain: "course-rank.firebaseapp.com",
@@ -9,9 +10,12 @@ const firebaseConfig = {
   measurementId: "G-9D8S1QQCY5"
 };
 
+// perisitent references to app (extension) and database
 const app = firebase.initializeApp(firebaseConfig);
 const db = app.database().ref();
 
+// sample test prior to adding runtime message handling queries 
+// to verify input/output integrity
 /*
 db.child("Christoph Csallner").get().then((snapshot) => {
   if (snapshot.exists()) {
@@ -22,6 +26,8 @@ db.child("Christoph Csallner").get().then((snapshot) => {
 });
 */
 
+// handles queries from frontend.js and passes the results back
+// in a chrome runtime message format
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     console.log(sender.tab ?

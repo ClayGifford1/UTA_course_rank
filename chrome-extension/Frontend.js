@@ -116,11 +116,7 @@ setTimeout( () =>
 								console.log(score);
 								newContent = document.createTextNode(scoreString);
 								newDiv = document.createElement("div");
-								newDiv.style.fontWeight = "bold";
-								newDiv.style.border = "solid";
-								newDiv.style.borderColor = "blue";
-								newDiv.style.borderWeight = "1px";
-								newDiv.style.zIndex = 1000;
+								newDiv.setAttribute("id", "Display");
 								newDiv.appendChild(newContent);
 								td.append(newDiv);
 								//newDiv.addEventListener('click', Clicked());
